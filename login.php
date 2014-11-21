@@ -31,6 +31,7 @@
 			$cid = $_POST["username"];
 			$pass = $_POST["password"];
 			
+			//Query needs to be changed to check for same username and password
 			$qry = "SELECT cid, password FROM customer";
 			
 			$result = oci_parse($connection, $qry);
