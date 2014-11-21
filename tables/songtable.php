@@ -21,7 +21,7 @@
 	
 <h2>UPC in alphabetical order</h2>
 <!-- Set up a table to view the book titles -->
-<table border=0 cellpadding=0 cellspacing=0>
+<table border=1 cellpadding=0 cellspacing=0>
 <!-- Create the table column headings -->
 
 <tr valign=center>
@@ -34,8 +34,6 @@
 	if (!$result = $connection->query("SELECT upc, title FROM has_song ORDER BY upc")) {
         die('There was an error running the query [' . $db->error . ']');
     }
-	
-	echo "<table>";
 	
     while($row = $result->fetch_assoc()){
         

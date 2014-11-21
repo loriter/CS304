@@ -7,12 +7,9 @@
 <body>Item return</body>
 
 <?php
-    /****************************************************
-     STEP 1: Connect to the MySQL database
-     ****************************************************/
 
     // CHANGE this to connect to your own MySQL instance in the labs or on your own computer
-    $connection = new mysqli("dbserver.ugrad.cs.ubc.ca", "j4n8", "s29454113", "j4n8");
+    $connection = new mysqli("dbserver.ugrad.cs.ubc.ca", "j4n8", "a29454113", "j4n8");
 
     // Check that the connection was successful, otherwise exit
     if (mysqli_connect_errno()) {
@@ -29,21 +26,24 @@
 			$upc = $_POST["upc"];
 			$quantity = $_POST["new_quantity"];
 			$retid = $receiptid;
+			
+			$qry = "SELECT receiptid, date FROM orders WHERE receiptid = ".$receiptid;
 		
-			if (!$result = $connection->query("SELECT receiptid, date FROM order ORDER BY receiptid WHERE receiptid = ".$receiptid."")) {
+			if (!$result = $connection->query($qry)) {
 				die('There was an error running the query [' . $db->error . ']');
 			}
 			//No idea what I'm doing
 			if($row = $result->fetch_assoc()) {
+				//This if is probably really really wrong
 				if($date < $row["date"] + 15) {
-					//Add stuff to return tables
+					$itemqry = ;
 				}
 				else {
 					echo "<b>Too late to return</b>";
 				}
 			}
 			else {
-				echo "<b>ReceiptID invalid</b>";
+				echo "<p><b>ReceiptID invalid</b></p>";
 			}
 		}
 	
@@ -62,5 +62,5 @@
 </table>
 </form>
 <form method="POST" action="home.php">
-<input type="submit" name="home" value="home">
+<input type="submit" name="home" value="Home">
 </form>

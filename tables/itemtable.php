@@ -5,6 +5,8 @@
 
 <title>ITEM TABBBBBBBBLEEEE</title>
 
+<link href="bookbiz.css" rel="stylesheet" type="text/css">
+
 <body>
 <h1>Item Table</h1>
 
@@ -21,8 +23,9 @@
 	
 <h2>UPC in alphabetical order</h2>
 <!-- Set up a table to view the book titles -->
-<table border=0 cellpadding=0 cellspacing=0>
+<table border=1 cellpadding=0 cellspacing=0>
 <!-- Create the table column headings -->
+<tbody>
 
 <tr valign=center>
 <td class=rowheader>UPC</td>
@@ -41,9 +44,6 @@
         die('There was an error running the query [' . $db->error . ']');
     }
 	
-	
-	echo "<table>";
-	
     while($row = $result->fetch_assoc()){
         
        echo "<tr><td>".$row['upc']."</td>";
@@ -56,7 +56,7 @@
 	   echo "<td>".$row['stock']."</td></tr>";
         
     }
-    echo "</table>";
+    echo "</tbody></table>";
 
     // Close the connection to the database once we're done with it.
     mysqli_close($connection);
@@ -66,3 +66,5 @@
 <form method="POST" action="../tables.php">
 <p><input type="submit" value="Tables" name="tables"></p>
 </form>
+</body>
+</html>

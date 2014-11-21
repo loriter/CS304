@@ -21,28 +21,26 @@
 	
 <h2>retid in alphabetical order</h2>
 <!-- Set up a table to view the book titles -->
-<table border=0 cellpadding=0 cellspacing=0>
+<table border=1 cellpadding=0 cellspacing=0>
 <!-- Create the table column headings -->
 
 <tr valign=center>
 <td class=rowheader>retid</td>
 <td class=rowheader>Date</td>
-<td class=rowheader>quantity</td>
+<td class=rowheader>ReceiptID</td>
 </tr>
 
 <?php
 	
-	if (!$result = $connection->query("SELECT retid, date, quantity FROM return ORDER BY retid")) {
+	if (!$result = $connection->query("SELECT retid, date, receiptid FROM returns ORDER BY retid")) {
         die('There was an error running the query [' . $db->error . ']');
     }
-	
-	echo "<table>";
 	
     while($row = $result->fetch_assoc()){
         
        echo "<tr><td>".$row['retid']."</td>";
        echo "<td>".$row['date']."</td>";
-	   echo "<td>".$row['quantity']."</td></tr>";
+	   echo "<td>".$row['receiptid']."</td></tr>";
         
     }
     echo "</table>";
