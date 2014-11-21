@@ -3,7 +3,6 @@
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <meta content="utf-8" http-equiv="encoding">
 <title>Doge Store</title>
-<link href="bookbiz.css" rel="stylesheet" type="text/css">
 
 <body>
 <h1>Welcome To The Doge Shop</h1>

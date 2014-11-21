@@ -3,7 +3,6 @@
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <meta content="utf-8" http-equiv="encoding">
 <title>Manager</title>
-<link href="bookbiz.css" rel="stylesheet" type="text/css">
 
 <body>
 <h1>What do you want to do?</h1>

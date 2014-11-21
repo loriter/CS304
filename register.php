@@ -3,7 +3,6 @@
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <meta content="utf-8" http-equiv="encoding">
 <title>Register</title>
-<link href="bookbiz.css" rel="stylesheet" type="text/css">
 
 <body>Customer Registration</body>
 
