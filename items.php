@@ -127,7 +127,7 @@ function formSubmit(upc) {
      ****************************************************/
 
    // Select all of the book rows columns upc, title and pub_id
-    if (!$result = $connection->query("SELECT upc, title, type, category, company, year, price, stock FROM titles ORDER BY title")) {
+    if (!$result = $connection->query("SELECT upc, title, type, category, company, year, price, stock FROM item ORDER BY upc")) {
         die('There was an error running the query [' . $db->error . ']');
     }
 
@@ -141,10 +141,6 @@ function formSubmit(upc) {
     echo "<input type=\"hidden\" name=\"submitDelete\" value=\"DELETE\"/>";
 
 
-    /****************************************************
-     STEP 4: Display the list of book titles
-     ****************************************************/
-    // Display each book title databaserow as a table row
     while($row = $result->fetch_assoc()){
         
        echo "<td>".$row['upc']."</td>";
