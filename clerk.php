@@ -17,3 +17,6 @@
 <tr><td></td><td><input type="submit" name="return" value="Return"></td></tr>
 </table>
 </form>
+<form method="POST" action="home.php">
+<input type="submit" name="home" value="home">
+</form>
