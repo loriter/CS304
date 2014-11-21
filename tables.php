@@ -46,3 +46,8 @@
 <form method="POST" action="tables/returnitemtable.php">
 <p><input type="submit" value="ReturnItem" name="returnitem"></p>
 </form>
+
+<p>Back to Home</p>
+<form method="POST" action="home.php">
+<p><input type="submit" value="Home" name="home"></p>
+</form>

@@ -8,19 +8,11 @@
 
 <?php
 
-	/* MYSQL CONNECTION CODE
-	$connection = new mysqli("dbserver.ugrad.cs.ubc.ca", "j4n8", "s29454113", "j4n8");
+	$connection = new mysqli("dbserver.ugrad.cs.ubc.ca", "j4n8", "a29454113", "j4n8");
 
     // Check that the connection was successful, otherwise exit
     if (mysqli_connect_errno()) {
         printf("Connect failed: %s\n", mysqli_connect_error());
-        exit();
-    }*/
-	
-	$connection = OCILogon("ora_j4n8", "a29454113", "ug");
-    // Check that the connection was successful, otherwise exit
-    if (!$connection) {
-        echo "<p> Connect failed:\n </p>";
         exit();
     }
 	
@@ -32,9 +24,11 @@
 			$pass = $_POST["password"];
 			
 			//Query needs to be changed to check for same username and password
-			$qry = "SELECT cid, password FROM customer";
+			$qry = "SELECT cid, password FROM customer WHERE cid = ".$cid." AND password = ".$pass;
 			
-			$result = oci_parse($connection, $qry);
+			if (!$result = $connection->query($qry)) {
+				die('There was an error running the query [' . $db->error . ']');
+			}
 			if( $result->num_rows > 0){
 				header('Location: customer.php');
 				exit;
@@ -52,20 +46,12 @@
 			$add = $_POST["new_add"];
 			$phone = $_POST["new_phone"];
 			
-			//$stmt = $connection->prepare("INSERT INTO customer (cid, password, name, address, phoneno) VALUES (?,?,?,?,?)");
-			$stmt = oci_parse($connection, "INSERT INTO customer (cid, password, name, address, phoneno) VALUES (:cid, :password, :name, :address, :phoneno)");
+			$stmt = $connection->prepare("INSERT INTO customer (cid, password, name, address, phoneno) VALUES (?,?,?,?,?)");
+			//$stmt = oci_parse($connection, "INSERT INTO customer (cid, password, name, address, phoneno) VALUES (:cid, :password, :name, :address, :phoneno)");
 			
-			//$stmt->bind_param("sss", $cid, $pass, $name, $add, $phone);
-			oci_bind_by_name($stmt, ':cid', $cid);
-			oci_bind_by_name($stmt, ':password', $pass);
-			oci_bind_by_name($stmt, ':name', $name);
-			oci_bind_by_name($stmt, ':address', $add);
-			oci_bind_by_name($stmt, ':phoneno', $phone);
+			$stmt->bind_param("sssss", $cid, $pass, $name, $add, $phone);
 			
-			//$stmt->execute();
-			oci_execute($stmt);
-			oci_commit($connection);
-			oci_free_statement($stmt);
+			$stmt->execute();
 			
 			if($stmt->error) {
 				printf("<b>Error: %s.</b>\n", $stmt->error);
@@ -97,5 +83,11 @@
 <form method="POST" action="register.php">
 <input type="submit" name="register" value="Register">
 </form>
+
+<p>Back to Home</p>
+<form method="POST" action="home.php">
+<p><input type="submit" value="Home" name="home"></p>
+</form>
+
 </body>
 </html>

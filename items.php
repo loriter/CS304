@@ -34,7 +34,7 @@ function formSubmit(upc) {
      ****************************************************/
 
     // CHANGE this to connect to your own MySQL instance in the labs or on your own computer
-    $connection = new mysqli("dbserver.ugrad.cs.ubc.ca", "j4n8", "s29454113", "j4n8");
+    $connection = new mysqli("dbserver.ugrad.cs.ubc.ca", "j4n8", "a29454113", "j4n8");
 
     // Check that the connection was successful, otherwise exit
     if (mysqli_connect_errno()) {
@@ -91,7 +91,7 @@ function formSubmit(upc) {
         $stmt = $connection->prepare("INSERT INTO item (upc, title, type, category, company, year, price, stock) VALUES (?,?,?,?,?,?,?,?)");
           
         // Bind the title and pub_id parameters, 'sss' indicates 3 strings
-        $stmt->bind_param("sss", $upc, $title, $type, $category, $company, $year, $price, $stock);
+        $stmt->bind_param("ssssssss", $upc, $title, $type, $category, $company, $year, $price, $stock);
         
         // Execute the insert statement
         $stmt->execute();
@@ -190,6 +190,11 @@ function formSubmit(upc) {
         <tr><td>Stock</td><td> <input type="text" size=30 name="new_stock"></td></tr>
         <tr><td></td><td><input type="submit" name="submit" border=0 value="ADD"></td></tr>
     </table>
+</form>
+
+<p>Back to Manager</p>
+<form method="POST" action="manager.php">
+<p><input type="submit" value="Manager" name="manager"></p>
 </form>
 </body>
 </html>

@@ -61,3 +61,8 @@
     // Close the connection to the database once we're done with it.
     mysqli_close($connection);
 ?>
+
+<p>Back to Tables</p>
+<form method="POST" action="../tables.php">
+<p><input type="submit" value="Tables" name="tables"></p>
+</form>

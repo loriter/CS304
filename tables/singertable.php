@@ -10,7 +10,7 @@
 
 <?php
 
-	$connection = new mysqli("dbserver.ugrad.cs.ubc.ca", "j4n8", "s29454113", "j4n8");
+	$connection = new mysqli("dbserver.ugrad.cs.ubc.ca", "j4n8", "a29454113", "j4n8");
 
     // Check that the connection was successful, otherwise exit
     if (mysqli_connect_errno()) {
@@ -31,7 +31,7 @@
 
 <?php
 	
-	if (!$result = $connection->query("SELECT name, upc FROM leadsinger ORDER BY name")) {
+	if (!$result = $connection->query("SELECT name, upc FROM lead_singer ORDER BY name")) {
         die('There was an error running the query [' . $db->error . ']');
     }
 	
@@ -48,3 +48,8 @@
     // Close the connection to the database once we're done with it.
     mysqli_close($connection);
 ?>
+
+<p>Back to Tables</p>
+<form method="POST" action="../tables.php">
+<p><input type="submit" value="Tables" name="tables"></p>
+</form>
