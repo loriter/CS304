@@ -44,7 +44,7 @@
 			}
 		}
 		
-		if(isset($_POST["register"]) && $_POST["register"] == "Register") {
+		else if(isset($_POST["register"]) && $_POST["register"] == "Register") {
 			
 			$cid = $_POST["new_cid"];
 			$pass = $_POST["new_pass"];
@@ -74,10 +74,15 @@
 				echo "<p><b>Successfully registered </b></p>";
 			}
 		}
+		else{
+			echo "<p>Click Register if you do not have an account</p>";
+		}
 	}
-	else {
-		echo "<p>Click Register if you do not have an account</p>";
-	}
+	
+	else{
+			echo "<p>Click Register if you do not have an account</p>";
+		}
+	
 	?>
 
 
