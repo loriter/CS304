@@ -21,3 +21,8 @@
 <form method="POST" action="manager.php">
 <p><input type="submit" value="Manager" name="manager"></p>
 </form>
+
+<p>Shows all tables in Database (used for debugging purposes).</p>
+<form method="POST" action="tables.php">
+<p><input type="submit" value="Tables" name="table"></p>
+</form>
