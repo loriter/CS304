@@ -10,7 +10,7 @@
 
 <?php
 
-	$connection = new mysqli("dbserver.ugrad.cs.ubc.ca", "j4n8", "s29454113", "j4n8");
+	$connection = new mysqli("dbserver.ugrad.cs.ubc.ca", "j4n8", "a29454113", "j4n8");
 
     // Check that the connection was successful, otherwise exit
     if (mysqli_connect_errno()) {
@@ -41,7 +41,8 @@
         die('There was an error running the query [' . $db->error . ']');
     }
 	
-	echo "<table>"
+	
+	echo "<table>";
 	
     while($row = $result->fetch_assoc()){
         

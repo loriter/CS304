@@ -35,7 +35,7 @@
         die('There was an error running the query [' . $db->error . ']');
     }
 	
-	echo "<table>"
+	echo "<table>";
 	
     while($row = $result->fetch_assoc()){
         
