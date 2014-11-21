@@ -32,7 +32,7 @@
 
 <?php
 	
-	if (!$result = $connection->query("SELECT retid, upc, quantity FROM purchaseitem ORDER BY retid")) {
+	if (!$result = $connection->query("SELECT retid, upc, quantity FROM returnitem ORDER BY retid")) {
         die('There was an error running the query [' . $db->error . ']');
     }
 	
