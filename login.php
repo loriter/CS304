@@ -23,8 +23,11 @@
 			$cid = $_POST["username"];
 			$pass = $_POST["password"];
 			
+			echo $cid;
+			echo $pass;
+			
 			//Query needs to be changed to check for same username and password
-			$qry = "SELECT cid, password FROM customer WHERE cid = ".$cid." AND password = ".$pass;
+			$qry = "SELECT cid, password FROM customer WHERE cid = '".$cid."' AND password = '".$pass."'";
 			
 			if (!$result = $connection->query($qry)) {
 				die('There was an error running the query [' . $db->error . ']');
@@ -54,7 +57,7 @@
 			$stmt->execute();
 			
 			if($stmt->error) {
-				printf("<b>Error: %s.</b>\n", $stmt->error);
+				printf("<p><b>Error: %s.</p></b>\n", $stmt->error);
 			}
 			else {
 				echo "<p><b>Successfully registered </b></p>";
