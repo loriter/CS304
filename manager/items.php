@@ -47,58 +47,73 @@ function formSubmit(upc) {
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-      if (isset($_POST["submitDelete"]) && $_POST["submitDelete"] == "DELETE") {
-       /*
-          Delete the selected book title using the upc
-        */
+		if (isset($_POST["submitDelete"]) && $_POST["submitDelete"] == "DELETE") {
        
-       // Create a delete query prepared statement with a ? for the upc
-       $stmt = $connection->prepare("DELETE FROM item WHERE upc=?");
-       $deleteUpc = $_POST['upc'];
-       // Bind the upc parameter, 's' indicates a string value
-       $stmt->bind_param("s", $deleteUpc);
+			// Create a delete query prepared statement with a ? for the upc
+			$stmt = $connection->prepare("DELETE FROM item WHERE upc=?");
+			$deleteUpc = $_POST['upc'];
+			// Bind the upc parameter, 's' indicates a string value
+			$stmt->bind_param("s", $deleteUpc);
        
-       // Execute the delete statement
-       $stmt->execute();
+			// Execute the delete statement
+			$stmt->execute();
           
-       if($stmt->error) {
-         printf("<b>Error: %s.</b>\n", $stmt->error);
-       } else {
-         echo "<b>Successfully deleted ".$deleteUpc."</b>";
-       }
-            
-      } elseif (isset($_POST["submit"]) && $_POST["submit"] ==  "ADD") {       
-		//TODO : Check UPC for existing time
-		//!!!!!!!!
-        $upc = $_POST["new_upc"];
-        $title = $_POST["new_title"];
-        $type = $_POST["new_type"];
-		$category = $_POST["new_category"];
-		$company = $_POST["new_company"];
-		$year = $_POST["new_year"];
-		$price = $_POST["new_price"];
-		$stock = $_POST["new_stock"];
+			if($stmt->error) {
+				printf("<b>Error: %s.</b>\n", $stmt->error);
+			} else {
+				echo "<b>Successfully deleted ".$deleteUpc."</b>";
+			}
+			
+		} elseif (isset($_POST["submit"]) && $_POST["submit"] ==  "ADD") {
+			$upc = $_POST["new_upc"];
+			$title = $_POST["new_title"];
+			$type = $_POST["new_type"];
+			$category = $_POST["new_category"];
+			$company = $_POST["new_company"];
+			$year = $_POST["new_year"];
+			$price = $_POST["new_price"];
+			$stock = $_POST["new_stock"];
+			
+			$qry = "SELECT stock FROM item WHERE upc = '".$upc."'";
+			if (!$result = $connection->query($qry)) {
+				die('There was an error running the query [' . $db->error . ']');
+			}
+			
+			//If item does not exist
+			if($result->num_rows < 1) {
+				$stmt = $connection->prepare("INSERT INTO item (upc, title, type, category, company, year, price, stock) VALUES (?,?,?,?,?,?,?,?)");
           
-        $stmt = $connection->prepare("INSERT INTO item (upc, title, type, category, company, year, price, stock) VALUES (?,?,?,?,?,?,?,?)");
-          
-        // Bind the title and pub_id parameters, 'sss' indicates 3 strings
-        $stmt->bind_param("ssssssss", $upc, $title, $type, $category, $company, $year, $price, $stock);
+				// Bind the title and pub_id parameters, 'sss' indicates 3 strings
+				$stmt->bind_param("ssssssss", $upc, $title, $type, $category, $company, $year, $price, $stock);
         
-        // Execute the insert statement
-        $stmt->execute();
+				// Execute the insert statement
+				$stmt->execute();
           
-        if($stmt->error) {       
-          printf("<b>Error: %s.</b>\n", $stmt->error);
-        } else {
-          echo "<b>Successfully added ".$upc."</b>";
-        }
-      }
+				/*if($stmt->error) {       
+					printf("<b>Error: %s.</b>\n", $stmt->error);
+				} else {
+					echo "<b>Successfully added ".$upc."</b>";
+				}*/
+			}
+			//If item exists update price and stock
+			else {
+				$row = $result->fetch_assoc();
+				$stock = $stock + $row['stock'];
+				$update = "UPDATE item SET price = '".$price."', stock = '".$stock."' WHERE upc = '".$upc."'";
+				if($connection->query($update) === TRUE) {
+					echo "<b><p>Updated successfully</b></p>";
+				}
+				else {
+					echo "<b><p>Update failed</b></p>";
+				}
+		}
+    }
    }
 ?>
 
 <h2>UPC in alphabetical order</h2>
 <!-- Set up a table to view the book titles -->
-<table border=0 cellpadding=0 cellspacing=0>
+<table border=1 cellpadding=0 cellspacing=0>
 <!-- Create the table column headings -->
 
 <tr valign=center>

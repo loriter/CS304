@@ -37,49 +37,34 @@
 				//This if is probably really really wrong
 				
 				if(strtotime($date) - strtotime($row["date"]) < (15*24*60*60)) {
-					$itemqry = "SELECT upc, quantity FROM purchase_item WHERE receiptid = '".$receiptid."'";
+					$itemqry = "SELECT quantity FROM purchase_item WHERE receiptid = '".$receiptid."' AND upc = '".$upc."'";
 					
-					/*if(!$purchases = $connection->query($itemqry)) {
+					if(!$purchases = $connection->query($itemqry)) {
 						die('Error query [' . $db->error . ']');
 					}
-					
+					//Retrieves the quantity from purchase_item
 					if($rowpurchase = $purchases->fetch_assoc()) {
-						if($rowpurchase["upc"] == $upc) {
-							$quantity = $rowpurchase["quantity"];
-							$deleteqry = "DELETE FROM purchase_item WHERE receiptid = '".$receiptid."' AND upc = '".$upc."'";
-							if($connection->query($deleteqry) === TRUE) {
-								echo "<p><b>Successfully deleted from purchase_item.</p></b>";
-							}
-						}
+						$quantity = $rowpurchase['quantity'];
 					}
-					
-					if($purchases->num_rows == 1) {
-						$deleteqry = "DELETE FROM orders WHERE receiptid = '".$receiptid."'";
-						if($connection->query($deleteqry) === TRUE) {
-							echo "<p><b>Successfully deleted from orders.</p></b>";
-						}
-						else {
-							echo "PEW PEW FAILED ORDERS" . $connection->error;
-						}
-					}*/
-					
+					//Adds to returns
 					$stmt = $connection->prepare("INSERT INTO returns (retid, date, receiptid) VALUES (?,?,?)");
-					
-					$stmt->bind("sss", $retid, $date, $receiptid);
-					/*$stmt->execute();
+					$stmt->bind_param("sss", $retid, $date, $receiptid);
+					$stmt->execute();
 					if($stmt->error) {       
 						printf("<b>Error: %s.</b>\n", $stmt->error);
 					} else {
-						echo "<b>Successfully added to returns</b>";
+						echo "<b><p>Successfully added to returns</b></p>";
 					}
-					
-					/*$stmt2 = $connection->prepare("INSERT INTO returnitem (retid, upc, quantity) VALUES (?,?,?)");
+					//Adds to returnitem
+					$stmt2 = $connection->prepare("INSERT INTO returnitem (retid, upc, quantity) VALUES (?,?,?)");
+					$stmt2->bind_param("sss", $retid, $upc, $quantity);
 					$stmt2->execute();
 					if($stmt2->error) {       
 						printf("<b>Error: %s.</b>\n", $stmt2->error);
 					} else {
-						echo "<b>Successfully added to returnitem</b>";
-					}*/
+						echo "<b><p>Successfully added to returnitem</p></b>";
+					}
+					
 				}
 				else {
 					echo "<b>Too late to return</b>";
