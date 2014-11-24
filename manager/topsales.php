@@ -9,8 +9,8 @@
 <p>Input date and top sales</p>
 <form method="POST" action="topsalesdisplay.php">
 <table border=0 cellpadding=0 cellspacing=0>
-<tr><td>Date</td><td><input type="text" size=30 name="new_cid"</td></tr>
-<tr><td>Number of Sales</td><td><input type="text" size=30 name="new_numsales"</td></t
+<tr><td>Date</td><td><input type="text" size=30 name="new_tsalesdate"</td></tr>
+<tr><td>Number of Sales</td><td><input type="text" size=30 name="new_nofsale"</td></tr>
 <tr><td></td><td><input type="submit" name="Search" value="Search"></td></tr>
 </table>
 </form>
