@@ -18,7 +18,7 @@ INSERT INTO item VALUE
 (2, "Ming's first DVD", "dVD", "pop", "Doge Entertainment", 2012, 19.99, 5);
 SELECT * FROM item;
 
-CREATE TABLE Lead_Singer(
+CREATE TABLE lead_singer(
 upc char(30) not null, 
 Name char(30) not null,
 PRIMARY KEY(upc, name));
@@ -28,7 +28,7 @@ INSERT INTO lead_singer VALUE
 (1, "MC Doge");
 SELECT * FROM lead_singer;
 
-CREATE TABLE Has_Song(
+CREATE TABLE has_song(
 upc char(30) not null,
 Title char(30) not null, 
 PRIMARY KEY(upc, title));
@@ -38,7 +38,7 @@ INSERT INTO has_song VALUE
 (1, "Campfire Song");
 SELECT * FROM has_song;
 
-CREATE TABLE Orders(
+CREATE TABLE orders(
 ReceiptId char(30) not null,
 Date date not null,
 CId char(30) not null,
@@ -55,14 +55,14 @@ INSERT INTO orders VALUE
 (2, '2013-1-3', 2, 12312312, '2015-2-7', '2013-1-5', '2013-1-5');
 SELECT * FROM orders;
 
-CREATE TABLE Purchase_Item(
+CREATE TABLE purchase_item(
 ReceiptId char(30) not null,
 upc char(30) not null,
 Quantity char(30) not null, 
 PRIMARY KEY (ReceiptId, upc));
-ALTER TABLE Purchase_Item
+ALTER TABLE purchase_item
 ADD FOREIGN KEY(ReceiptId) REFERENCES Orders(ReceiptId);
-ALTER TABLE Purchase_Item
+ALTER TABLE purchase_item
 ADD FOREIGN KEY(upc) REFERENCES item(upc);
 INSERT INTO purchase_item VALUE
 (1, 1, 1);
@@ -70,7 +70,7 @@ INSERT INTO purchase_item VALUE
 (2, 2, 1);
 SELECT * FROM purchase_item;
 
-CREATE TABLE Customer(
+CREATE TABLE customer(
 CId char(30) not null,
 Password char(30) not null,
 Name char(30) not null,
@@ -85,7 +85,7 @@ INSERT INTO customer VALUE
 (3, 'password', 'Alvin Chan', 'Near Evans House', 0987654321);
 SELECT * FROM customer;
 
-CREATE TABLE Returns(
+CREATE TABLE returns(
 RetId char(30) not null,
 Date date not null,
 ReceiptId char(30) not null,
@@ -96,7 +96,7 @@ INSERT INTO returns VALUE
 (1, '2012-12-31', 1);
 SELECT * FROM returns;
 
-CREATE TABLE ReturnItem(
+CREATE TABLE returnitem(
 RetId char(30) not null,
 upc char(30) not null,
 Quantity char(30) not null,
