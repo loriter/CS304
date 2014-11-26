@@ -37,7 +37,7 @@ All sales for: <?php echo $_POST["new_rdate"]; ?>
 	$cat = null;
 	$cVal = 0;
 	$tVal = 0;
-
+	$tUnits = 0;
 	while($rrow = $rresult->fetch_assoc()){
 	
 		if($cat != $rrow['category']){
@@ -53,6 +53,7 @@ All sales for: <?php echo $_POST["new_rdate"]; ?>
 		$itemVal = $rquantity * $rprice;
 		$cVal += $itemVal;
 		$tVal += $itemVal;
+		$tUnits += $rquantity;
 		
 		echo "<tr><td>".$rrow['upc']."</td>"; 
 		echo "<td>".$rrow['category']."</td>";  
@@ -61,7 +62,7 @@ All sales for: <?php echo $_POST["new_rdate"]; ?>
 		echo "<td>".$itemVal."</td></tr>"; 
 	}
 	echo "<tr><td></td><td>Total</td><td></td><td></td><td>".$cVal."</td></tr>";
-	echo "<tr><td></td><td>Total Sales</td><td></td><td></td><td>".$tVal."</td></tr>";
+	echo "<tr><td></td><td>Total Sales</td><td></td><td>".$tUnits."</td><td>".$tVal."</td></tr>";
     echo "</tbody></table>";
 ?>
 
