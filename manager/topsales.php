@@ -17,6 +17,6 @@
 
 
 <p>Back to manager home page</p>
-<form method="POST" action="manager.php">
+<form method="POST" action="../manager.php">
 <p><input type="submit" value="Back" name="Back"></p>
 </form>
