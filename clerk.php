@@ -24,7 +24,7 @@
 			$receiptid = $_POST["receiptId"];
 			$date = $_POST["new_date"];
 			$upc = $_POST["upc"];
-			$retid = $_POST["receiptId"];
+			$retid = 0;
 			$quantity = 0;
 			
 			$qry = "SELECT receiptid, date FROM orders WHERE receiptid = '".$receiptid."'";
@@ -45,26 +45,33 @@
 					//Retrieves the quantity from purchase_item
 					if($rowpurchase = $purchases->fetch_assoc()) {
 						$quantity = $rowpurchase['quantity'];
+						$maxqry = "SELECT MAX(retid) AS highestRetID FROM returns";
+						if(!$maxresult = $connection->query($maxqry)) {
+							die('ERROR PEW PEW');
+						}
+						
+						$maxrow = $maxresult->fetch_assoc();
+						$retid = $maxrow['highestRetID'] + 1;
+						
+						//Adds to returns
+						$stmt = $connection->prepare("INSERT INTO returns (retid, date, receiptid) VALUES (?,?,?)");
+						$stmt->bind_param("sss", $retid, $date, $receiptid);
+						$stmt->execute();
+						if($stmt->error) {       
+							printf("<b>Error: %s.</b>\n", $stmt->error);
+						} else {
+							echo "<b><p>Successfully added to returns</b></p>";
+						}
+						//Adds to returnitem
+						$stmt2 = $connection->prepare("INSERT INTO returnitem (retid, upc, quantity) VALUES (?,?,?)");
+						$stmt2->bind_param("sss", $retid, $upc, $quantity);
+						$stmt2->execute();
+						if($stmt2->error) {       
+							printf("<b>Error: %s.</b>\n", $stmt2->error);
+						} else {
+							echo "<b><p>Successfully added to returnitem</p></b>";
+						}
 					}
-					//Adds to returns
-					$stmt = $connection->prepare("INSERT INTO returns (retid, date, receiptid) VALUES (?,?,?)");
-					$stmt->bind_param("sss", $retid, $date, $receiptid);
-					$stmt->execute();
-					if($stmt->error) {       
-						printf("<b>Error: %s.</b>\n", $stmt->error);
-					} else {
-						echo "<b><p>Successfully added to returns</b></p>";
-					}
-					//Adds to returnitem
-					$stmt2 = $connection->prepare("INSERT INTO returnitem (retid, upc, quantity) VALUES (?,?,?)");
-					$stmt2->bind_param("sss", $retid, $upc, $quantity);
-					$stmt2->execute();
-					if($stmt2->error) {       
-						printf("<b>Error: %s.</b>\n", $stmt2->error);
-					} else {
-						echo "<b><p>Successfully added to returnitem</p></b>";
-					}
-					
 				}
 				else {
 					echo "<b>Too late to return</b>";
