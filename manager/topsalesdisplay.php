@@ -37,7 +37,7 @@
     }
 	if(!$tsresult = $connection->query("SELECT I.title, I.company, I.stock AS totalstock, SUM(P.quantity) AS tsold, O.date
 FROM Item I, Purchase_Item P, Orders O
-WHERE O.date = $tsdate AND I.upc = P.upc AND P.receiptId = O.receiptId
+WHERE O.date = '$tsdate' AND I.upc = P.upc AND P.receiptId = O.receiptId
 GROUP BY I.title, I.company, O.date
 ORDER BY tsold DESC LIMIT $nsales")){
   	echo "Sad face ";
