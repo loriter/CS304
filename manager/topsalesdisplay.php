@@ -35,11 +35,11 @@
         printf("Connect failed: %s\n", mysqli_connect_error());
         exit();
     }
-	if(!$tsresult = $connection->query("SELECT I.title, I.company, I.stock AS totalstock, SUM(P.quantity) AS unitsSold, O.date
+	if(!$tsresult = $connection->query("SELECT I.title, I.company, I.stock AS totalstock, SUM(P.quantity) AS tsold, O.date
 FROM Item I, Purchase_Item P, Orders O
 WHERE O.date = $tsdate AND I.upc = P.upc AND P.receiptId = O.receiptId
 GROUP BY I.title, I.company, O.date
-ORDER BY unitsSold DESC LIMIT $nsales")){
+ORDER BY tsold DESC LIMIT $nsales")){
   	echo "Sad face ";
  	 die('There was an error running the top sales query');
 	}
@@ -47,7 +47,7 @@ ORDER BY unitsSold DESC LIMIT $nsales")){
        echo "<tr><td>".$tsrow['title']."</td>";
        echo "<td>".$tsrow['company']."</td>";
        echo "<td>".$tsrow['totalstock']."</td>";
-	   echo "<td>".$tsrow['unitsSold']."</td></tr>";
+	   echo "<td>".$tsrow['tsold']."</td></tr>";
     }
     echo "</table>";
 
